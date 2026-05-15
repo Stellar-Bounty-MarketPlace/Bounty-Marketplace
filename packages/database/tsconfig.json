@@ -1,0 +1,16 @@
+{
+  "extends": "../config/typescript/base.json",
+  "compilerOptions": {
+    "rootDir": ".",
+    "outDir": "dist",
+    "moduleResolution": "node"
+  },
+  "include": [
+    "src/**/*.ts",
+    "prisma/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
+}

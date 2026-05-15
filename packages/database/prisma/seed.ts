@@ -1,4 +1,4 @@
-import { PrismaClient, UserRole, BountyStatus, BountyDifficulty, BountyCategory, ReputationTier } from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
@@ -15,7 +15,7 @@ async function main() {
       githubUsername: 'bountyhub-admin',
       displayName: 'BountyHub Admin',
       avatarUrl: 'https://avatars.githubusercontent.com/u/1000001',
-      role: UserRole.ADMIN,
+      role: 'ADMIN',
       isVerified: true,
     },
   });
@@ -30,7 +30,7 @@ async function main() {
       githubUsername: 'alice-maintainer',
       displayName: 'Alice Chen',
       avatarUrl: 'https://avatars.githubusercontent.com/u/1000002',
-      role: UserRole.MAINTAINER,
+      role: 'MAINTAINER',
       isVerified: true,
     },
   });
@@ -45,7 +45,7 @@ async function main() {
       githubUsername: 'bob-dev',
       displayName: 'Bob Martinez',
       avatarUrl: 'https://avatars.githubusercontent.com/u/1000003',
-      role: UserRole.CONTRIBUTOR,
+      role: 'CONTRIBUTOR',
       isVerified: true,
       contributor: {
         create: {
@@ -53,7 +53,7 @@ async function main() {
           bio: 'Full-stack developer specializing in Rust and TypeScript',
           skills: ['Rust', 'TypeScript', 'React', 'PostgreSQL'],
           reputationScore: 1850,
-          reputationTier: ReputationTier.EXPERT,
+          reputationTier: 'EXPERT',
           totalEarned: 12500,
           bountiesCompleted: 23,
           bountiesAttempted: 26,
@@ -92,9 +92,9 @@ async function main() {
       {
         title: 'Implement token vesting contract with cliff period',
         description: 'Build a production-grade token vesting contract on Soroban with configurable cliff periods, linear vesting schedules, and emergency revocation capabilities.',
-        status: BountyStatus.OPEN,
-        difficulty: BountyDifficulty.ADVANCED,
-        category: BountyCategory.FEATURE,
+        status: 'OPEN',
+        difficulty: 'ADVANCED',
+        category: 'FEATURE',
         amount: 2500,
         currency: 'USDC',
         repositoryId: repo.id,
@@ -106,9 +106,9 @@ async function main() {
       {
         title: 'Fix memory leak in event subscription handler',
         description: 'Investigate and fix the memory leak reported in the WebSocket event subscription handler that causes OOM after ~48h of uptime.',
-        status: BountyStatus.OPEN,
-        difficulty: BountyDifficulty.INTERMEDIATE,
-        category: BountyCategory.BUG_FIX,
+        status: 'OPEN',
+        difficulty: 'INTERMEDIATE',
+        category: 'BUG_FIX',
         amount: 800,
         currency: 'USDC',
         repositoryId: repo.id,
@@ -120,9 +120,9 @@ async function main() {
       {
         title: 'Add comprehensive test suite for AMM contract',
         description: 'Write a complete test suite covering edge cases, invariants, and fuzz testing for the automated market maker contract.',
-        status: BountyStatus.IN_PROGRESS,
-        difficulty: BountyDifficulty.ADVANCED,
-        category: BountyCategory.TESTING,
+        status: 'IN_PROGRESS',
+        difficulty: 'ADVANCED',
+        category: 'TESTING',
         amount: 1500,
         currency: 'USDC',
         repositoryId: repo.id,
