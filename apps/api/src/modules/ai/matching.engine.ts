@@ -1,4 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common';
+import { Prisma } from '@bounty/database';
 import type { ContributorMatch } from '@bounty/shared';
 import { AI_MATCH_LIMIT } from '@bounty/shared';
 
@@ -9,6 +10,15 @@ import { EmbeddingService } from './embedding.service';
 import { CACHE_TTL } from '@bounty/shared';
 
 const MODEL_VERSION = '1.0.0';
+
+type BountyWithRepository = Prisma.BountyGetPayload<{ include: { repository: true } }>;
+type ContributorWithRelations = Prisma.ContributorProfileGetPayload<{
+  include: {
+    languageStats: true;
+    user: { select: { displayName: true; avatarUrl: true; githubUsername: true } };
+    reputationEvents: true;
+  };
+}>;
 
 @Injectable()
 export class MatchingEngine {
@@ -68,8 +78,8 @@ export class MatchingEngine {
   }
 
   private async scoreContributor(
-    contributor: Awaited<ReturnType<DatabaseService['contributorProfile']['findMany']>>[0],
-    bounty: Awaited<ReturnType<DatabaseService['bounty']['findUnique']>> & object,
+    contributor: ContributorWithRelations,
+    bounty: BountyWithRepository,
     semanticSimilarity: number,
   ): Promise<ContributorMatch> {
     const weights = {
@@ -90,7 +100,7 @@ export class MatchingEngine {
         : 0;
 
     // Language match
-    const repoLanguage = (bounty as { repository: { language: string | null } }).repository.language?.toLowerCase();
+    const repoLanguage = bounty.repository.language?.toLowerCase();
     const languageMatch = repoLanguage
       ? contributor.languageStats.some(
           (l) => l.language.toLowerCase() === repoLanguage && ['ADVANCED', 'EXPERT'].includes(l.level),
@@ -119,7 +129,7 @@ export class MatchingEngine {
 
     const matchReasons: string[] = [];
     if (semanticSimilarity > 0.7) matchReasons.push('Strong semantic match with bounty requirements');
-    if (languageMatch === 1) matchReasons.push(`Expert in ${(bounty as { repository: { language: string | null } }).repository.language}`);
+    if (languageMatch === 1) matchReasons.push(`Expert in ${bounty.repository.language}`);
     if (successRate > 0.8) matchReasons.push(`${Math.round(successRate * 100)}% bounty success rate`);
     if (contributor.reputationTier === 'ELITE' || contributor.reputationTier === 'EXPERT') {
       matchReasons.push(`${contributor.reputationTier} tier contributor`);
@@ -138,7 +148,7 @@ export class MatchingEngine {
         githubId: '',
         displayName: contributor.user.displayName,
         avatarUrl: contributor.user.avatarUrl,
-        bio: contributor.bio ?? undefined,
+        bio: contributor.bio ?? '',
         skills: contributor.skills,
         languages: contributor.languageStats.map((l) => ({
           language: l.language,

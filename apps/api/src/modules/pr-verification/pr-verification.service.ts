@@ -3,7 +3,7 @@ import { DatabaseService } from '../database/database.service';
 import { GitHubService } from './github.service';
 import { SpamDetectionService } from '../ai/spam-detection.service';
 import { ReputationService } from '../reputation/reputation.service';
-import { ReputationEventType } from '@bounty/database';
+import { Prisma, ReputationEventType } from '@bounty/database';
 
 export interface LinkPRDto {
   bountyId: string;
@@ -70,11 +70,11 @@ export class PrVerificationService {
         isSpam: spamResult.isSpam,
         qualityScore,
         verificationData: {
-          spamResult,
+          spamResult: { ...spamResult },
           commits: ghPR.commits,
           additions: ghPR.additions,
           deletions: ghPR.deletions,
-        },
+        } as unknown as Prisma.InputJsonValue,
         commits: ghPR.commits,
         additions: ghPR.additions,
         deletions: ghPR.deletions,

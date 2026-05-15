@@ -1,5 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { ReputationEventType, ReputationTier } from '@bounty/database';
+import { Prisma, ReputationEventType, ReputationTier } from '@bounty/database';
 import { REPUTATION_WEIGHTS, REPUTATION_TIERS } from '@bounty/shared';
 
 import { DatabaseService } from '../database/database.service';
@@ -25,7 +25,7 @@ export class ReputationService {
     await this.db.$transaction(async (tx) => {
       // Record the event
       await tx.reputationEvent.create({
-        data: { contributorId, type, delta, reason, metadata },
+        data: { contributorId, type, delta, reason, metadata: metadata as Prisma.InputJsonValue },
       });
 
       // Update the score

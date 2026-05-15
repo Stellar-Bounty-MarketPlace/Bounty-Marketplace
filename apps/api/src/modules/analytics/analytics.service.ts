@@ -1,4 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common';
+import { Prisma } from '@bounty/database';
 import { DatabaseService } from '../database/database.service';
 import { RedisService } from '../redis/redis.service';
 import { CACHE_TTL } from '@bounty/shared';
@@ -117,7 +118,7 @@ export class AnalyticsService {
     metadata: Record<string, unknown> = {},
   ) {
     return this.db.analyticsEvent.create({
-      data: { type, actorId, subjectId, subjectType, metadata },
+      data: { type, actorId, subjectId, subjectType, metadata: metadata as Prisma.InputJsonValue },
     });
   }
 

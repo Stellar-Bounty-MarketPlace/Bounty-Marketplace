@@ -246,7 +246,7 @@ export class BountyService {
 
     if (!canCancel) throw new ForbiddenException('Insufficient permissions to cancel');
 
-    const cancellableStatuses = [BountyStatus.OPEN, BountyStatus.DRAFT];
+    const cancellableStatuses: BountyStatus[] = [BountyStatus.OPEN, BountyStatus.DRAFT];
     if (!cancellableStatuses.includes(bounty.status)) {
       throw new BadRequestException(`Cannot cancel bounty in status: ${bounty.status}`);
     }
@@ -264,7 +264,7 @@ export class BountyService {
     const bounty = await this.db.bounty.findUnique({ where: { id: bountyId } });
     if (!bounty) throw new NotFoundException('Bounty not found');
 
-    const disputeableStatuses = [BountyStatus.IN_REVIEW, BountyStatus.IN_PROGRESS];
+    const disputeableStatuses: BountyStatus[] = [BountyStatus.IN_REVIEW, BountyStatus.IN_PROGRESS];
     if (!disputeableStatuses.includes(bounty.status)) {
       throw new BadRequestException('Cannot open dispute for this bounty status');
     }

@@ -1,5 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { NotificationType } from '@bounty/database';
+import { NotificationType, Prisma } from '@bounty/database';
 import { DatabaseService } from '../database/database.service';
 import { RedisService } from '../redis/redis.service';
 
@@ -26,7 +26,7 @@ export class NotificationService {
         type: dto.type,
         title: dto.title,
         body: dto.body,
-        metadata: dto.metadata ?? {},
+        metadata: (dto.metadata ?? {}) as Prisma.InputJsonValue,
       },
     });
 
