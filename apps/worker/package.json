@@ -1,0 +1,26 @@
+{
+  "name": "@bounty/worker",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "tsc",
+    "dev": "ts-node-dev --respawn src/index.ts",
+    "start": "node dist/index.js",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@bounty/database": "*",
+    "@bounty/shared": "*",
+    "bullmq": "^5.7.8",
+    "ioredis": "^5.3.2",
+    "openai": "^4.47.1",
+    "axios": "^1.6.8",
+    "dotenv": "^16.4.5"
+  },
+  "devDependencies": {
+    "@bounty/config": "*",
+    "@types/node": "^20.12.7",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.4.5"
+  }
+}
