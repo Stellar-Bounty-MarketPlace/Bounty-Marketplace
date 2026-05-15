@@ -128,7 +128,7 @@ async function main() {
         repositoryId: repo.id,
         issueNumber: 163,
         creatorId: maintainer.id,
-        assigneeId: (await prisma.contributorProfile.findUnique({ where: { githubUsername: 'bob-dev' } }))?.id,
+        assigneeId: (await prisma.contributorProfile.findUnique({ where: { githubUsername: 'bob-dev' } }))?.id ?? null,
         tags: ['rust', 'testing', 'amm', 'defi'],
       },
     ],
