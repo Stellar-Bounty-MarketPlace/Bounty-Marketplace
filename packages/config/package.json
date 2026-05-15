@@ -1,0 +1,9 @@
+{
+  "name": "@bounty/config",
+  "version": "1.0.0",
+  "private": true,
+  "exports": {
+    "./eslint/*": "./eslint/*.js",
+    "./typescript/*": "./typescript/*.json"
+  }
+}
