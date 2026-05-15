@@ -1,0 +1,23 @@
+{
+  "name": "@bounty/sdk",
+  "version": "1.0.0",
+  "private": true,
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@bounty/shared": "*",
+    "@stellar/stellar-sdk": "^12.0.0",
+    "axios": "^1.6.8"
+  },
+  "devDependencies": {
+    "@bounty/config": "*",
+    "typescript": "^5.4.5"
+  }
+}
