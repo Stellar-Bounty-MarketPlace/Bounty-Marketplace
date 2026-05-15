@@ -20,7 +20,7 @@
     "@prisma/client": "^5.13.0"
   },
   "devDependencies": {
-    "@bounty/config": "*",
+    "@bounty/config": "workspace:*",
     "prisma": "^5.13.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.5"

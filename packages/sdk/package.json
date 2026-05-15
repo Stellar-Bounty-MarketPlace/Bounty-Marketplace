@@ -12,12 +12,12 @@
     "build": "tsc"
   },
   "dependencies": {
-    "@bounty/shared": "*",
+    "@bounty/shared": "workspace:*",
     "@stellar/stellar-sdk": "^12.0.0",
     "axios": "^1.6.8"
   },
   "devDependencies": {
-    "@bounty/config": "*",
+    "@bounty/config": "workspace:*",
     "typescript": "^5.4.5"
   }
 }
